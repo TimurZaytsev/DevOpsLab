@@ -38,4 +38,3 @@ jobs:
            username: ${{ secrets.DOCKER_USER }}
            password: ${{ secrets.DOCKER_PASSWORD }}
            repository: timurzaytsev/devopslab
-           tags: latest, ${{ github.sha }}
