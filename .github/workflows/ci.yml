@@ -55,27 +55,23 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  tg_msg_success:
+  telegram:
     runs-on: ubuntu-latest
     needs: [ docker ]
     steps:
-      - name: message
+      - name: message_1
         uses: "appleboy/telegram-action@master"
         with:
           to: ${{ secrets.id }}
           token: ${{ secrets.Token }}
-          message: |
+          if: failure()
+          message_1: |
+            The build was unsuccessful!
+      - name: message_2
+        uses: "appleboy/telegram-action@master"
+        with:
+          to: ${{ secrets.id }}
+          token: ${{ secrets.Token }}
+          if: success()
+          message_2: |
             The build was successful!
-  
-  tg_msg_unsuccess:
-    if: failure() 
-    runs-on: ubuntu-latest
-    needs: [ docker ]
-    steps:
-      - name: message
-        uses: "appleboy/telegram-action@master"
-        with:
-          to: ${{ secrets.id }}
-          token: ${{ secrets.Token }}
-          message: |
-            The build was unsuccesfull!
